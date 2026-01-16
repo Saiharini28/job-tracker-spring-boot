@@ -47,6 +47,21 @@ Sample Output
   }
 ]
 
+
+## 🎯 Project Purpose
+
+The Job Tracker Spring Boot Application is designed to help users track their job applications in an organized way.  
+It allows users to store company name, job role, and application status through REST APIs.  
+This project demonstrates backend development skills using Spring Boot, RESTful services, and layered architecture.
+
+## 🔗 API Endpoints
+
+| Method | Endpoint            | Description                     |
+|------- |---------------------|---------------------------------|
+| GET    | /jobs               | Fetch all job applications      |
+| POST   | /jobs               | Add a new job application       |
+
+
 Author
 Saiharini
 
