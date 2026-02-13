@@ -5,4 +5,3 @@ import com.jobtracker.jobtracker.Job;
 
 public interface JobRepository extends JpaRepository<Job, Long> {
 }
-

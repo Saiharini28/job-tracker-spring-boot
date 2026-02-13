@@ -32,10 +32,11 @@
     </dependency>
 
     <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <scope>runtime</scope>
+    <groupId>com.mysql</groupId>
+    <artifactId>mysql-connector-j</artifactId>
+    <scope>runtime</scope>
     </dependency>
+
 
     <!-- ADD THIS -->
     <dependency>
@@ -43,6 +44,9 @@
         <artifactId>jakarta.persistence-api</artifactId>
         <version>3.1.0</version>
     </dependency>
+
+    
+
 </dependencies>
 
 
