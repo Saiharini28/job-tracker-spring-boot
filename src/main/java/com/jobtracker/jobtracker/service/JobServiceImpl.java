@@ -34,12 +34,17 @@ public class JobServiceImpl implements JobService {
     @Override
     public Optional<Job> updateJob(Long id, Job updatedJob) {
         return jobRepository.findById(id).map(job -> {
-            job.setCompany(updatedJob.getCompany());
-            job.setRole(updatedJob.getRole());
-            job.setStatus(updatedJob.getStatus());
-            return jobRepository.save(job);
-        });
-    }
+        job.setCompany(updatedJob.getCompany());
+        job.setRole(updatedJob.getRole());
+        job.setStatus(updatedJob.getStatus());
+
+        job.setAppliedDate(updatedJob.getAppliedDate());
+        job.setResumeVersion(updatedJob.getResumeVersion());
+        job.setNotes(updatedJob.getNotes());
+
+        return jobRepository.save(job);
+    });
+}
 
     @Override
     public boolean deleteJob(Long id) {

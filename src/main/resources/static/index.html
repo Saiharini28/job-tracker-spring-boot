@@ -40,17 +40,71 @@
             background-color: #007bff;
             color: white;
         }
+        .dashboard-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    min-width: 180px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+}
+
+.dashboard-card h3 {
+    margin: 0;
+    color: #555;
+}
+
+.dashboard-card p {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+}
     </style>
 </head>
 <body>
 
 <h1>Job Tracker</h1>
 
+<div id="dashboard" style="display:flex;gap:15px;margin:20px 0;flex-wrap:wrap;">
+
+    <div class="dashboard-card" style="border-left:5px solid #6c757d;">
+        <h3>Total Applications</h3>
+        <p id="totalCount">0</p>
+    </div>
+
+    <div class="dashboard-card" style="border-left:5px solid #0d6efd;">
+        <h3>Applied</h3>
+        <p id="appliedCount">0</p>
+    </div>
+
+    <div class="dashboard-card" style="border-left:5px solid #ffc107;">
+        <h3>Interview</h3>
+        <p id="interviewCount">0</p>
+    </div>
+
+    <div class="dashboard-card" style="border-left:5px solid #198754;">
+        <h3>Offer</h3>
+        <p id="offerCount">0</p>
+    </div>
+
+    <div class="dashboard-card" style="border-left:5px solid #dc3545;">
+        <h3>Rejected</h3>
+        <p id="rejectedCount">0</p>
+    </div>
+
+</div>
+
 <h2>Add / Update Job</h2>
 <form id="jobForm">
     <input type="hidden" id="jobId" value="">
+
     <input type="text" id="company" placeholder="Company" required>
     <input type="text" id="role" placeholder="Role" required>
+
     <select id="status" required>
         <option value="">Select Status</option>
         <option value="Applied">Applied</option>
@@ -58,19 +112,53 @@
         <option value="Offer">Offer</option>
         <option value="Rejected">Rejected</option>
     </select>
+
+    <input type="date" id="appliedDate" required>
+
+    <input type="text" id="resumeVersion"
+           placeholder="Resume Version (e.g. Resume_v3)">
+
+    <input type="text" id="notes"
+           placeholder="Notes">
+
     <button type="submit">Save Job</button>
 </form>
+
+<div style="margin-bottom:15px;">
+    <input type="text"
+           id="searchCompany"
+           placeholder="Search Company">
+
+    <select id="filterStatus">
+        <option value="">All Status</option>
+        <option value="Applied">Applied</option>
+        <option value="Interview">Interview</option>
+        <option value="Offer">Offer</option>
+        <option value="Rejected">Rejected</option>
+    </select>
+
+    <select id="sortJobs">
+        <option value="">Sort By</option>
+        <option value="latest">Latest Applied Date</option>
+        <option value="oldest">Oldest Applied Date</option>
+        <option value="az">Company A-Z</option>
+        <option value="za">Company Z-A</option>
+    </select>
+</div>
 
 <h2>All Jobs</h2>
 <table id="jobsTable">
     <thead>
-        <tr>
-            <th>ID</th>
-            <th>Company</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
+    <tr>
+        <th>ID</th>
+        <th>Company</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Applied Date</th>
+        <th>Resume Version</th>
+        <th>Notes</th>
+        <th>Actions</th>
+    </tr>
     </thead>
     <tbody></tbody>
 </table>
@@ -83,37 +171,118 @@ function fetchJobs() {
     fetch(apiUrl)
         .then(res => res.json())
         .then(data => {
+
             const tbody = document.querySelector("#jobsTable tbody");
             tbody.innerHTML = "";
-            data.forEach(job => {
+
+            let applied = 0;
+            let interview = 0;
+            let offer = 0;
+            let rejected = 0;
+
+            const searchValue = document.getElementById("searchCompany").value.toLowerCase();
+            const filterValue = document.getElementById("filterStatus").value;
+            const sortValue = document.getElementById("sortJobs").value;
+            if (sortValue === "latest") {
+    data.sort((a, b) =>
+        new Date(b.appliedDate) - new Date(a.appliedDate)
+    );
+}
+
+if (sortValue === "oldest") {
+    data.sort((a, b) =>
+        new Date(a.appliedDate) - new Date(b.appliedDate)
+    );
+}
+
+if (sortValue === "az") {
+    data.sort((a, b) =>
+        a.company.localeCompare(b.company)
+    );
+}
+
+if (sortValue === "za") {
+    data.sort((a, b) =>
+        b.company.localeCompare(a.company)
+    );
+}
+
+
+    data.forEach(job => {
+        if (
+    !job.company.toLowerCase().includes(searchValue)
+) {
+    return;
+}
+
+if (
+    filterValue &&
+    job.status !== filterValue
+) {
+    return;
+}
+
+                if (job.status === "Applied") applied++;
+                if (job.status === "Interview") interview++;
+                if (job.status === "Offer") offer++;
+                if (job.status === "Rejected") rejected++;
+
                 const row = document.createElement("tr");
+
                 row.innerHTML = `
                     <td>${job.id}</td>
                     <td>${job.company}</td>
                     <td>${job.role}</td>
-                    <td>${job.status}</td>
+                    <td>
+    <span style="
+        padding:5px 10px;
+        border-radius:20px;
+        font-weight:bold;
+        color:#000;
+        background-color:
+        ${job.status === 'Applied' ? '#cfe2ff' :
+          job.status === 'Interview' ? '#fff3cd' :
+          job.status === 'Offer' ? '#d1e7dd' :
+          '#f8d7da'};
+    ">
+        ${job.status}
+    </span>
+</td>
+                    <td>${job.appliedDate || ""}</td>
+                    <td>${job.resumeVersion || ""}</td>
+                    <td>${job.notes || ""}</td>
                     <td>
                         <button onclick="editJob(${job.id})">Edit</button>
                         <button onclick="deleteJob(${job.id})">Delete</button>
                     </td>
                 `;
+
                 tbody.appendChild(row);
             });
+
+            document.getElementById("totalCount").textContent = data.length;
+            document.getElementById("appliedCount").textContent = applied;
+            document.getElementById("interviewCount").textContent = interview;
+            document.getElementById("offerCount").textContent = offer;
+            document.getElementById("rejectedCount").textContent = rejected;
         });
 }
 
-// Add or update job
 document.getElementById("jobForm").addEventListener("submit", function(e){
     e.preventDefault();
+
     const id = document.getElementById("jobId").value;
+
     const job = {
         company: document.getElementById("company").value,
         role: document.getElementById("role").value,
-        status: document.getElementById("status").value
+        status: document.getElementById("status").value,
+        appliedDate: document.getElementById("appliedDate").value,
+        resumeVersion: document.getElementById("resumeVersion").value,
+        notes: document.getElementById("notes").value
     };
 
     if(id) {
-        // Update
         fetch(`${apiUrl}/${id}`, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
@@ -124,7 +293,6 @@ document.getElementById("jobForm").addEventListener("submit", function(e){
             document.getElementById("jobId").value = "";
         });
     } else {
-        // Add
         fetch(apiUrl, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -145,6 +313,15 @@ function editJob(id) {
             document.getElementById("company").value = job.company;
             document.getElementById("role").value = job.role;
             document.getElementById("status").value = job.status;
+
+            document.getElementById("appliedDate").value =
+                job.appliedDate || "";
+
+            document.getElementById("resumeVersion").value =
+                job.resumeVersion || "";
+
+            document.getElementById("notes").value =
+                job.notes || "";
         });
 }
 
@@ -156,6 +333,16 @@ function deleteJob(id) {
     }
 }
 
+document
+    .getElementById("searchCompany")
+    .addEventListener("input", fetchJobs);
+
+document
+    .getElementById("filterStatus")
+    .addEventListener("change", fetchJobs);
+document
+    .getElementById("sortJobs")
+    .addEventListener("change", fetchJobs);
 // Initial load
 fetchJobs();
 </script>
