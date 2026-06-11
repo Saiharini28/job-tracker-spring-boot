@@ -5,10 +5,23 @@
     <title>Job Tracker</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f5f5f5;
+        font-family: Inter, Arial, sans-serif;
+        margin: 0;
+        padding: 30px;
+        background: #0f172a;
+        color: white;
+    }
+        .page-title {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
+
+        .page-subtitle {
+            color: #64748b;
+            margin-bottom: 30px;
+        }
+        
         h1 {
             color: #333;
         }
@@ -16,58 +29,117 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #fff;
+            background: #1e293b;
+            border-radius: 20px;
+            overflow: hidden;
         }
         th, td {
             padding: 12px;
-            border: 1px solid #ccc;
-            text-align: left;
+            border-bottom: 1px solid #334155;
+            color: #e2e8f0;
         }
         th {
-            background-color: #007bff;
+            background: #111827;
             color: white;
         }
-        input, select {
-            padding: 8px;
-            margin: 5px;
-        }
+        input,
+            select {
+                background: #111827;
+                color: white;
+                border: 1px solid #334155;
+                border-radius: 10px;
+                padding: 10px;
+            }
         button {
-            padding: 8px 12px;
-            margin: 5px;
-            cursor: pointer;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
         }
         button:hover {
             background-color: #007bff;
             color: white;
         }
         .dashboard-card {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    min-width: 180px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 20px;
+            padding: 24px;
+            min-width: 220px;
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.3);
+            transition: all .3s ease;
+        }
+
+    .dashboard-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 12px 40px rgba(59,130,246,0.25);
 }
 
-.dashboard-card:hover {
-    transform: translateY(-3px);
+    .dashboard-card h3 {
+        margin: 0;
+        font-size: 14px;
+        color: #94a3b8;
+    }
+
+    .dashboard-card p {
+    color: white;
+    font-size: 34px;
+    font-weight: 700;
 }
 
-.dashboard-card h3 {
-    margin: 0;
-    color: #555;
+    .jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
 }
 
-.dashboard-card p {
-    font-size: 24px;
+    .job-card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 20px;
+        padding: 20px;
+        color: white;
+        transition: all .3s ease;
+    }
+
+    .job-card:hover {
+        transform: translateY(-4px);
+    }
+
+.job-company {
+    font-size: 22px;
     font-weight: bold;
-    margin-top: 10px;
+}
+
+.job-role {
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+.job-info {
+    margin-top: 15px;
+}
+
+.job-actions {
+    margin-top: 15px;
 }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<h1>Job Tracker</h1>
+<div class="page-title">
+    📊 Job Tracker Dashboard
+</div>
+
+<div class="page-subtitle">
+    Track all your applications in one place
+</div>
 
 <div id="dashboard" style="display:flex;gap:15px;margin:20px 0;flex-wrap:wrap;">
 
@@ -98,6 +170,22 @@
 
 </div>
 
+<div style="
+background:#1e293b;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+box-shadow:0 8px 30px rgba(0,0,0,0.3);
+">
+    <h3 style="color:white;">
+        Application Status Overview
+    </h3>
+
+    <canvas id="statusChart"
+            style="max-height:350px;">
+    </canvas>
+</div>
+
 <h2>Add / Update Job</h2>
 <form id="jobForm">
     <input type="hidden" id="jobId" value="">
@@ -120,6 +208,11 @@
 
     <input type="text" id="notes"
            placeholder="Notes">
+
+    <input
+    type="url"
+    id="jobLink"
+    placeholder="Job Link">
 
     <button type="submit">Save Job</button>
 </form>
@@ -147,6 +240,7 @@
 </div>
 
 <h2>All Jobs</h2>
+<div id="jobsGrid" class="jobs-grid"></div>
 <table id="jobsTable">
     <thead>
     <tr>
@@ -157,6 +251,7 @@
         <th>Applied Date</th>
         <th>Resume Version</th>
         <th>Notes</th>
+        <th>Job Link</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -165,6 +260,7 @@
 
 <script>
 const apiUrl = "http://localhost:8081/jobs";
+let chart;
 
 // Fetch all jobs
 function fetchJobs() {
@@ -173,6 +269,8 @@ function fetchJobs() {
         .then(data => {
 
             const tbody = document.querySelector("#jobsTable tbody");
+            const jobsGrid = document.getElementById("jobsGrid");
+            jobsGrid.innerHTML = "";
             tbody.innerHTML = "";
 
             let applied = 0;
@@ -229,6 +327,36 @@ if (
 
                 const row = document.createElement("tr");
 
+                const card = document.createElement("div");
+
+card.className = "job-card";
+
+card.innerHTML = `
+    <div class="job-company">${job.company}</div>
+
+    <div class="job-role">${job.role}</div>
+
+    <div class="job-info">
+        <strong>Status:</strong> ${job.status}<br>
+        <strong>Applied:</strong> ${job.appliedDate || "-"}<br>
+        <strong>Resume:</strong> ${job.resumeVersion || "-"}<br>
+        <strong>Notes:</strong> ${job.notes || "-"}<br>
+        <strong>Link:</strong>
+            ${
+                job.jobLink
+                ? `<a href="${job.jobLink}" target="_blank">Open Job</a>`
+                : "-"
+            }
+    </div>
+
+    <div class="job-actions">
+        <button onclick="editJob(${job.id})">Edit</button>
+        <button onclick="deleteJob(${job.id})">Delete</button>
+    </div>
+`;
+
+jobsGrid.appendChild(card);
+
                 row.innerHTML = `
                     <td>${job.id}</td>
                     <td>${job.company}</td>
@@ -252,6 +380,13 @@ if (
                     <td>${job.resumeVersion || ""}</td>
                     <td>${job.notes || ""}</td>
                     <td>
+                        ${
+                            job.jobLink
+                            ? `<a href="${job.jobLink}" target="_blank">Open</a>`
+                            : ""
+                        }
+                    </td>
+                    <td>
                         <button onclick="editJob(${job.id})">Edit</button>
                         <button onclick="deleteJob(${job.id})">Delete</button>
                     </td>
@@ -265,6 +400,46 @@ if (
             document.getElementById("interviewCount").textContent = interview;
             document.getElementById("offerCount").textContent = offer;
             document.getElementById("rejectedCount").textContent = rejected;
+            if(chart){
+    chart.destroy();
+}
+
+const ctx =
+document.getElementById("statusChart");
+
+chart = new Chart(ctx, {
+    type: "doughnut",
+    data: {
+        labels: [
+            "Applied",
+            "Interview",
+            "Offer",
+            "Rejected"
+        ],
+        datasets: [{
+            data: [
+                applied,
+                interview,
+                offer,
+                rejected
+            ],
+            backgroundColor: [
+                "#3b82f6",
+                "#f59e0b",
+                "#10b981",
+                "#ef4444"
+            ]
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "bottom"
+            }
+        }
+    }
+});
         });
 }
 
@@ -279,7 +454,8 @@ document.getElementById("jobForm").addEventListener("submit", function(e){
         status: document.getElementById("status").value,
         appliedDate: document.getElementById("appliedDate").value,
         resumeVersion: document.getElementById("resumeVersion").value,
-        notes: document.getElementById("notes").value
+        notes: document.getElementById("notes").value,
+        jobLink: document.getElementById("jobLink").value
     };
 
     if(id) {
@@ -322,6 +498,8 @@ function editJob(id) {
 
             document.getElementById("notes").value =
                 job.notes || "";
+
+            document.getElementById("jobLink").value = job.jobLink || "";
         });
 }
 

@@ -41,6 +41,7 @@ public class JobServiceImpl implements JobService {
         job.setAppliedDate(updatedJob.getAppliedDate());
         job.setResumeVersion(updatedJob.getResumeVersion());
         job.setNotes(updatedJob.getNotes());
+        job.setJobLink(updatedJob.getJobLink());
 
         return jobRepository.save(job);
     });

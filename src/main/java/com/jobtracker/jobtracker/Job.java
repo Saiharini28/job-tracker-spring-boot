@@ -23,6 +23,7 @@ public class Job {
     private LocalDate appliedDate;
     private String resumeVersion;
     private String notes;
+    private String jobLink;
 
     // No-arg constructor (REQUIRED by JPA)
     public Job() {
@@ -71,6 +72,9 @@ public class Job {
     public String getNotes() {
         return notes;
     }
+    public String getJobLink() {
+    return jobLink;
+    }
 
     // Setters
 
@@ -96,5 +100,9 @@ public class Job {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void setJobLink(String jobLink) {
+    this.jobLink = jobLink;
     }
 }
