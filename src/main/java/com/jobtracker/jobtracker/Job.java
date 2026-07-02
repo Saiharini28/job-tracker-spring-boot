@@ -24,6 +24,8 @@ public class Job {
     private String resumeVersion;
     private String notes;
     private String jobLink;
+    private LocalDate interviewDate;
+    private String email;
 
     // No-arg constructor (REQUIRED by JPA)
     public Job() {
@@ -31,9 +33,11 @@ public class Job {
 
     // Constructor WITHOUT id
     public Job(String company, String role, String status,
-               LocalDate appliedDate,
-               String resumeVersion,
-               String notes) {
+           LocalDate appliedDate,
+           String resumeVersion,
+           String notes,
+           String jobLink,
+           LocalDate interviewDate) {
 
         this.company = company;
         this.role = role;
@@ -41,6 +45,8 @@ public class Job {
         this.appliedDate = appliedDate;
         this.resumeVersion = resumeVersion;
         this.notes = notes;
+        this.jobLink = jobLink;
+        this.interviewDate = interviewDate;
     }
 
     // Getters
@@ -65,6 +71,10 @@ public class Job {
         return appliedDate;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public String getResumeVersion() {
         return resumeVersion;
     }
@@ -74,6 +84,9 @@ public class Job {
     }
     public String getJobLink() {
     return jobLink;
+    }
+    public LocalDate getInterviewDate() {
+    return interviewDate;
     }
 
     // Setters
@@ -94,6 +107,10 @@ public class Job {
         this.appliedDate = appliedDate;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public void setResumeVersion(String resumeVersion) {
         this.resumeVersion = resumeVersion;
     }
@@ -104,5 +121,8 @@ public class Job {
 
     public void setJobLink(String jobLink) {
     this.jobLink = jobLink;
+    }
+    public void setInterviewDate(LocalDate interviewDate) {
+    this.interviewDate = interviewDate;
     }
 }

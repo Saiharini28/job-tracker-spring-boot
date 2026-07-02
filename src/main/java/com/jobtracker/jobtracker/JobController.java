@@ -4,6 +4,8 @@ import com.jobtracker.jobtracker.service.JobService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.jobtracker.jobtracker.service.SendGridEmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class JobController {
 
     private final JobService jobService;
+
+    @Autowired
+    private SendGridEmailService sendGridEmailService;
 
     public JobController(JobService jobService) {
         this.jobService = jobService;
@@ -29,7 +34,7 @@ public class JobController {
     public ResponseEntity<Job> getJobById(@PathVariable Long id) {
         Optional<Job> job = jobService.getJobById(id);
         return job.map(ResponseEntity::ok)
-                  .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     // Add new job
@@ -43,7 +48,7 @@ public class JobController {
     public ResponseEntity<Job> updateJob(@PathVariable Long id, @RequestBody Job updatedJob) {
         Optional<Job> updated = jobService.updateJob(id, updatedJob);
         return updated.map(ResponseEntity::ok)
-                      .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     // Delete job
@@ -54,6 +59,18 @@ public class JobController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    // Test SendGrid Email
+    @GetMapping("/test-email")
+    public String testEmail() {
+        try {
+            sendGridEmailService.sendEmail("kinnuu1415@gmail.com");
+            return "Email Sent Successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Failed: " + e.getMessage();
         }
     }
 }

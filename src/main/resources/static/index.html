@@ -10,7 +10,46 @@
         padding: 30px;
         background: #0f172a;
         color: white;
-    }
+        }
+
+        .layout{
+            display:flex;
+        }
+
+        .sidebar{
+            width:250px;
+            min-height:100vh;
+            background:#111827;
+            padding:30px 20px;
+            position:sticky;
+            top:0;
+        }
+
+            .sidebar h2{
+                color:white;
+                margin-bottom:40px;
+            }
+
+            .sidebar a{
+                display:block;
+                color:#94a3b8;
+                text-decoration:none;
+                padding:12px 15px;
+                border-radius:10px;
+                margin-bottom:10px;
+                transition:0.3s;
+            }
+
+            .sidebar a:hover{
+                background:#1e293b;
+                color:white;
+            }
+
+        .main-content{
+            flex:1;
+            padding:30px;
+        }
+
         .page-title {
             font-size: 36px;
             font-weight: bold;
@@ -131,8 +170,22 @@
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
 
+<div class="layout">
+
+    <div class="sidebar">
+        <h2>🚀 JobTracker</h2>
+
+        <a href="#">Dashboard</a>
+        <a href="#">Applications</a>
+        <a href="#">Analytics</a>
+        <a href="#">Settings</a>
+    </div>
+
+    <div class="main-content">
+    
 <div class="page-title">
     📊 Job Tracker Dashboard
 </div>
@@ -203,6 +256,9 @@ box-shadow:0 8px 30px rgba(0,0,0,0.3);
 
     <input type="date" id="appliedDate" required>
 
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Enter candidate email">
+
     <input type="text" id="resumeVersion"
            placeholder="Resume Version (e.g. Resume_v3)">
 
@@ -213,6 +269,11 @@ box-shadow:0 8px 30px rgba(0,0,0,0.3);
     type="url"
     id="jobLink"
     placeholder="Job Link">
+
+    <input
+    type="date"
+    id="interviewDate"
+    placeholder="Interview Date">
 
     <button type="submit">Save Job</button>
 </form>
@@ -249,6 +310,8 @@ box-shadow:0 8px 30px rgba(0,0,0,0.3);
         <th>Role</th>
         <th>Status</th>
         <th>Applied Date</th>
+        <th>Email</th>
+        <th>Interview Date</th>
         <th>Resume Version</th>
         <th>Notes</th>
         <th>Job Link</th>
@@ -339,6 +402,8 @@ card.innerHTML = `
     <div class="job-info">
         <strong>Status:</strong> ${job.status}<br>
         <strong>Applied:</strong> ${job.appliedDate || "-"}<br>
+        <strong>Email:</strong> ${job.email || "-"}<br>
+        <strong>Interview:</strong> ${job.interviewDate || "-"}<br>
         <strong>Resume:</strong> ${job.resumeVersion || "-"}<br>
         <strong>Notes:</strong> ${job.notes || "-"}<br>
         <strong>Link:</strong>
@@ -377,6 +442,8 @@ jobsGrid.appendChild(card);
     </span>
 </td>
                     <td>${job.appliedDate || ""}</td>
+                    <td>${job.email || ""}</td>
+                    <td>${job.interviewDate || ""}</td>
                     <td>${job.resumeVersion || ""}</td>
                     <td>${job.notes || ""}</td>
                     <td>
@@ -448,14 +515,17 @@ document.getElementById("jobForm").addEventListener("submit", function(e){
 
     const id = document.getElementById("jobId").value;
 
+
     const job = {
         company: document.getElementById("company").value,
         role: document.getElementById("role").value,
         status: document.getElementById("status").value,
         appliedDate: document.getElementById("appliedDate").value,
+        email: document.getElementById("email").value,
         resumeVersion: document.getElementById("resumeVersion").value,
         notes: document.getElementById("notes").value,
-        jobLink: document.getElementById("jobLink").value
+        jobLink: document.getElementById("jobLink").value,
+        interviewDate: document.getElementById("interviewDate").value
     };
 
     if(id) {
@@ -492,6 +562,9 @@ function editJob(id) {
 
             document.getElementById("appliedDate").value =
                 job.appliedDate || "";
+            
+            document.getElementById("email").value =
+                job.email || "";
 
             document.getElementById("resumeVersion").value =
                 job.resumeVersion || "";
@@ -500,6 +573,8 @@ function editJob(id) {
                 job.notes || "";
 
             document.getElementById("jobLink").value = job.jobLink || "";
+
+            document.getElementById("interviewDate").value = job.interviewDate || "";
         });
 }
 
@@ -524,6 +599,7 @@ document
 // Initial load
 fetchJobs();
 </script>
-
+</div>
+</div>
 </body>
 </html>
