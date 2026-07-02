@@ -26,6 +26,7 @@ public class Job {
     private String jobLink;
     private LocalDate interviewDate;
     private String email;
+    private boolean reminderSent = false;
 
     // No-arg constructor (REQUIRED by JPA)
     public Job() {
@@ -89,6 +90,11 @@ public class Job {
     return interviewDate;
     }
 
+    public boolean isReminderSent() {
+        return reminderSent;
+    }
+
+
     // Setters
 
     public void setCompany(String company) {
@@ -124,5 +130,8 @@ public class Job {
     }
     public void setInterviewDate(LocalDate interviewDate) {
     this.interviewDate = interviewDate;
+    }
+    public void setReminderSent(boolean reminderSent) {
+        this.reminderSent = reminderSent;
     }
 }

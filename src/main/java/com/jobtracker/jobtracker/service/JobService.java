@@ -17,3 +17,4 @@ public interface JobService {
 
     boolean deleteJob(Long id);
 }
+

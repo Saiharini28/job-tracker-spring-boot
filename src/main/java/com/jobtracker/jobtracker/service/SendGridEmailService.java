@@ -22,28 +22,36 @@ public class SendGridEmailService {
 
     public void sendEmail(String toEmail) throws IOException {
 
-        Email from = new Email("kinnuu1415@gmail.com"); // Your verified sender email
-        Email to = new Email(toEmail);
+    Email from = new Email("kinnuu1415@gmail.com");
+    Email to = new Email(toEmail);
 
-        String subject = "Test Email from Job Tracker";
+    String subject = "Interview Reminder - Job Tracker";
 
-        Content content = new Content(
-                "text/plain",
-                "Congratulations! 🎉 Your SendGrid integration is working successfully."
-        );
+    String message =
+            "Dear Candidate,\n\n" +
+            "This is a friendly reminder that your interview is scheduled for tomorrow.\n\n" +
+            "Please find the details below:\n\n" +
+            "Company: Job Application Tracker\n" +
+            "Interview Date: Tomorrow\n" +
+            "Time: Please check your schedule\n\n" +
+            "This is an automated reminder from Job Tracker System.\n\n" +
+            "All the best for your interview!\n\n" +
+            "Regards,\n" +
+            "Job Tracker System";
 
-        Mail mail = new Mail(from, subject, to, content);
+    Content content = new Content("text/plain", message);
 
-        SendGrid sendGrid = new SendGrid(apiKey);
+    Mail mail = new Mail(from, subject, to, content);
 
-        Request request = new Request();
-        request.setMethod(Method.POST);
-        request.setEndpoint("mail/send");
-        request.setBody(mail.build());
+    SendGrid sendGrid = new SendGrid(apiKey);
 
-        Response response = sendGrid.api(request);
+    Request request = new Request();
+    request.setMethod(Method.POST);
+    request.setEndpoint("mail/send");
+    request.setBody(mail.build());
 
-        System.out.println("Status Code: " + response.getStatusCode());
-        System.out.println("Response Body: " + response.getBody());
-    }
+    Response response = sendGrid.api(request);
+
+    System.out.println("Status Code: " + response.getStatusCode());
+}
 }
