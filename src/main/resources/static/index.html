@@ -5,197 +5,301 @@
     <title>Job Tracker</title>
     <style>
         body {
-        font-family: Inter, Arial, sans-serif;
-        margin: 0;
-        padding: 30px;
-        background: #0f172a;
-        color: white;
-        }
-
-        .layout{
-            display:flex;
-        }
-
-        .sidebar{
-            width:250px;
-            min-height:100vh;
-            background:#111827;
-            padding:30px 20px;
-            position:sticky;
-            top:0;
-        }
-
-            .sidebar h2{
-                color:white;
-                margin-bottom:40px;
-            }
-
-            .sidebar a{
-                display:block;
-                color:#94a3b8;
-                text-decoration:none;
-                padding:12px 15px;
-                border-radius:10px;
-                margin-bottom:10px;
-                transition:0.3s;
-            }
-
-            .sidebar a:hover{
-                background:#1e293b;
-                color:white;
-            }
-
-        .main-content{
-            flex:1;
-            padding:30px;
-        }
-
-        .page-title {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .page-subtitle {
-            color: #64748b;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: #1e293b;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        th, td {
-            padding: 12px;
-            border-bottom: 1px solid #334155;
-            color: #e2e8f0;
-        }
-        th {
-            background: #111827;
-            color: white;
-        }
-        input,
-            select {
-                background: #111827;
-                color: white;
-                border: 1px solid #334155;
-                border-radius: 10px;
-                padding: 10px;
-            }
-        button {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 15px;
-        }
-        button:hover {
-            background-color: #007bff;
-            color: white;
-        }
-        .dashboard-card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 20px;
-            padding: 24px;
-            min-width: 220px;
-            box-shadow:
-                0 8px 30px rgba(0,0,0,0.3);
-            transition: all .3s ease;
-        }
-
-    .dashboard-card:hover {
-    transform: translateY(-6px);
-
-    box-shadow:
-        0 12px 40px rgba(59,130,246,0.25);
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: #f5f7fb;
+    color: #111827;
 }
 
-    .dashboard-card h3 {
-        margin: 0;
-        font-size: 14px;
-        color: #94a3b8;
-    }
+/* MAIN LAYOUT */
+.main-content {
+    padding: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
 
-    .dashboard-card p {
-    color: white;
-    font-size: 34px;
+/* HEADER */
+.page-title {
+    font-size: 32px;
     font-weight: 700;
+    color: #111827;
 }
 
-    .jobs-grid {
+.page-subtitle {
+    color: #6b7280;
+    margin-bottom: 25px;
+}
+
+/* DASHBOARD CARDS */
+/*#dashboard {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}*/
+
+#dashboard{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:18px;
+    margin:25px 0;
+}
+
+.dashboard-card{
+    background:#fff;
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    border:1px solid #e5e7eb;
+    transition:.25s;
+    text-align:center;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-4px);
+}
+
+.dashboard-card h3{
+    margin:0;
+    font-size:14px;
+    color:#6b7280;
+    font-weight:600;
+}
+
+.dashboard-card p{
+    margin-top:12px;
+    font-size:34px;
+    font-weight:700;
+    color:#111827;
+}
+
+/* FORM */
+
+form{
+    background:#fff;
+    border-radius:16px;
+    padding:25px;
+    margin-top:25px;
+    box-shadow:0 4px 20px rgba(0,0,0,.06);
+    border:1px solid #e5e7eb;
+}
+
+input,
+select{
+
+    width:100%;
+    padding:12px 15px;
+    border-radius:10px;
+    border:1px solid #d1d5db;
+    font-size:15px;
+    margin-top:10px;
+    margin-bottom:10px;
+    box-sizing:border-box;
+}
+
+input:focus, select:focus {
+    border-color: #6366f1;
+}
+
+/* BUTTON */
+button{
+
+    background:#2563eb;
+    color:white;
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+
+button:hover{
+
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+/* FILTER BAR */
+#searchCompany, #filterStatus, #sortJobs {
+    margin: 5px;
+    width: auto;
+}
+
+/* JOB GRID */
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
     margin-top: 20px;
 }
 
-    .job-card {
-        background: #1e293b;
-        border: 1px solid #334155;
-        border-radius: 20px;
-        padding: 20px;
-        color: white;
-        transition: all .3s ease;
-    }
+/* JOB CARD */
+.job-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    border: 1px solid #eef0f3;
+    transition: 0.2s;
+}
 
-    .job-card:hover {
-        transform: translateY(-4px);
-    }
+.job-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 15px 35px rgba(37,99,235,.12);
+}
 
 .job-company {
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .job-role {
-    color: #94a3b8;
-    margin-top: 5px;
+    color: #6b7280;
+    margin-top: 4px;
 }
 
 .job-info {
-    margin-top: 15px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #374151;
 }
 
 .job-actions {
-    margin-top: 15px;
+    margin-top: 12px;
+}
+
+/* STATUS BADGE */
+.status {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+h2{
+    margin-top:40px;
+    margin-bottom:15px;
+    color:#111827;
+}
+
+table{
+    width:100%;
+    margin-top:30px;
+    border-collapse:collapse;
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,.06);
+}
+
+thead{
+    background:#1e293b;
+}
+
+thead th{
+    color:white;
+    padding:18px;
+    text-align:left;
+    font-size:14px;
+}
+
+tbody td{
+    padding:16px;
+    border-bottom:1px solid #edf2f7;
+}
+
+tbody tr:hover{
+    background:#f8fafc;
+}
+
+.job-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+    transition:.3s;
+}
+
+.job-form{
+    background:#fff;
+    padding:25px;
+    border-radius:16px;
+    margin:20px 0;
+    box-shadow:0 4px 20px rgba(0,0,0,.06);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+    margin-bottom:18px;
+}
+
+.form-grid input,
+.form-grid select{
+    width:100%;
+    box-sizing:border-box;
+}
+
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    resize:vertical;
+    font-family:inherit;
+    box-sizing:border-box;
+    margin-bottom:15px;
+}
+
+a{
+    color:#2563eb;
+    text-decoration:none;
+    font-weight:600;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+th:nth-child(5),
+td:nth-child(5),
+th:nth-child(7),
+td:nth-child(7){
+    white-space: nowrap;
+}
+
+@media(max-width:1000px){
+    .form-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:650px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
 }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-
-<div class="layout">
-
-    <div class="sidebar">
-        <h2>🚀 JobTracker</h2>
-
-        <a href="#">Dashboard</a>
-        <a href="#">Applications</a>
-        <a href="#">Analytics</a>
-        <a href="#">Settings</a>
-    </div>
-
     <div class="main-content">
     
 <div class="page-title">
-    📊 Job Tracker Dashboard
+    📊 🚀 Job Application Tracker
 </div>
 
 <div class="page-subtitle">
     Track all your applications in one place
 </div>
 
-<div id="dashboard" style="display:flex;gap:15px;margin:20px 0;flex-wrap:wrap;">
 
+<div id="dashboard">
     <div class="dashboard-card" style="border-left:5px solid #6c757d;">
         <h3>Total Applications</h3>
         <p id="totalCount">0</p>
@@ -224,23 +328,71 @@
 </div>
 
 <div style="
-background:#1e293b;
-padding:20px;
-border-radius:20px;
-margin-top:20px;
-box-shadow:0 8px 30px rgba(0,0,0,0.3);
+background:#ffffff;
+padding:30px;
+border-radius:18px;
+margin-top:30px;
+box-shadow:0 10px 30px rgba(15,23,42,.08);
+border:1px solid #e5e7eb;
+height:430px;
 ">
-    <h3 style="color:white;">
+    <h3 style="color:#111827;">
         Application Status Overview
     </h3>
 
-    <canvas id="statusChart"
-            style="max-height:350px;">
-    </canvas>
+    <canvas id="statusChart"></canvas>
 </div>
 
-<h2>Add / Update Job</h2>
-<form id="jobForm">
+<h2 style="margin-top:35px;">➕ Add New Application</h2>
+
+<form id="jobForm" class="job-form">
+
+    <input type="hidden" id="jobId">
+
+    <div class="form-grid">
+
+        <input type="text" id="company" placeholder="Company" required>
+
+        <input type="text" id="role" placeholder="Role" required>
+
+        <select id="status" required>
+            <option value="">Select Status</option>
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+        </select>
+
+        <input type="date" id="appliedDate" required>
+
+        <input type="email"
+               id="email"
+               placeholder="Candidate Email">
+
+        <input type="file"
+               id="resumeFile"
+               accept=".pdf">
+
+        <input type="url"
+               id="jobLink"
+               placeholder="Job Link">
+
+        <input type="date"
+               id="interviewDate">
+
+    </div>
+
+    <textarea
+        id="notes"
+        rows="4"
+        placeholder="Notes"></textarea>
+
+    <button type="submit">
+        Save Job
+    </button>
+
+</form>
+<!--<form id="jobForm">
     <input type="hidden" id="jobId" value="">
 
     <input type="text" id="company" placeholder="Company" required>
@@ -257,10 +409,9 @@ box-shadow:0 8px 30px rgba(0,0,0,0.3);
     <input type="date" id="appliedDate" required>
 
     <label for="email">Email</label>
-    <input type="email" id="email" placeholder="Enter candidate email">
+    <input type="email" id="email" placeholder="Enter email">
 
-    <input type="text" id="resumeVersion"
-           placeholder="Resume Version (e.g. Resume_v3)">
+    <input type="file" id="resumeFile" accept=".pdf">
 
     <input type="text" id="notes"
            placeholder="Notes">
@@ -276,31 +427,46 @@ box-shadow:0 8px 30px rgba(0,0,0,0.3);
     placeholder="Interview Date">
 
     <button type="submit">Save Job</button>
-</form>
+</form>-->
 
-<div style="margin-bottom:15px;">
-    <input type="text"
-           id="searchCompany"
-           placeholder="Search Company">
 
-    <select id="filterStatus">
-        <option value="">All Status</option>
-        <option value="Applied">Applied</option>
-        <option value="Interview">Interview</option>
-        <option value="Offer">Offer</option>
-        <option value="Rejected">Rejected</option>
-    </select>
+<div style="
+display:flex;
+gap:15px;
+align-items:center;
+margin:30px 0;
+flex-wrap:wrap;
+">
 
-    <select id="sortJobs">
-        <option value="">Sort By</option>
-        <option value="latest">Latest Applied Date</option>
-        <option value="oldest">Oldest Applied Date</option>
-        <option value="az">Company A-Z</option>
-        <option value="za">Company Z-A</option>
-    </select>
+<input
+type="text"
+id="searchCompany"
+placeholder="🔍 Search Company"
+style="flex:2;">
+
+<select
+id="filterStatus"
+style="flex:1;">
+    <option value="">All Status</option>
+    <option value="Applied">Applied</option>
+    <option value="Interview">Interview</option>
+    <option value="Offer">Offer</option>
+    <option value="Rejected">Rejected</option>
+</select>
+
+<select
+id="sortJobs"
+style="flex:1;">
+    <option value="">Sort By</option>
+    <option value="latest">Latest Applied Date</option>
+    <option value="oldest">Oldest Applied Date</option>
+    <option value="az">Company A-Z</option>
+    <option value="za">Company Z-A</option>
+</select>
+
 </div>
 
-<h2>All Jobs</h2>
+<h2 style="margin-top:40px;">📂 Job Applications</h2>
 <div id="jobsGrid" class="jobs-grid"></div>
 <table id="jobsTable">
     <thead>
@@ -324,6 +490,19 @@ box-shadow:0 8px 30px rgba(0,0,0,0.3);
 <script>
 const apiUrl = "http://localhost:8081/jobs";
 let chart;
+
+function formatDate(dateString){
+
+    if(!dateString) return "-";
+
+    const options = {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    };
+
+    return new Date(dateString).toLocaleDateString("en-GB", options);
+}
 
 // Fetch all jobs
 function fetchJobs() {
@@ -401,10 +580,15 @@ card.innerHTML = `
 
     <div class="job-info">
         <strong>Status:</strong> ${job.status}<br>
-        <strong>Applied:</strong> ${job.appliedDate || "-"}<br>
+        <strong>Applied:</strong>${formatDate(job.appliedDate)}<br>
         <strong>Email:</strong> ${job.email || "-"}<br>
-        <strong>Interview:</strong> ${job.interviewDate || "-"}<br>
-        <strong>Resume:</strong> ${job.resumeVersion || "-"}<br>
+        <strong>Interview:</strong>${formatDate(job.interviewDate)}<br>
+        <strong>Resume:</strong>
+            ${
+                job.resumeVersion
+                ? `<a href="http://localhost:8081/${job.resumeVersion}" target="_blank">Open Resume</a>`
+                : "-"
+            }<br>
         <strong>Notes:</strong> ${job.notes || "-"}<br>
         <strong>Link:</strong>
             ${
@@ -415,9 +599,17 @@ card.innerHTML = `
     </div>
 
     <div class="job-actions">
-        <button onclick="editJob(${job.id})">Edit</button>
-        <button onclick="deleteJob(${job.id})">Delete</button>
-    </div>
+
+        <button onclick="editJob(${job.id})">
+Edit
+</button>
+
+<button
+onclick="deleteJob(${job.id})"
+style="background:#ef4444;margin-left:8px;">
+Delete
+</button>
+        </div>
 `;
 
 jobsGrid.appendChild(card);
@@ -427,24 +619,30 @@ jobsGrid.appendChild(card);
                     <td>${job.company}</td>
                     <td>${job.role}</td>
                     <td>
-    <span style="
-        padding:5px 10px;
-        border-radius:20px;
-        font-weight:bold;
-        color:#000;
-        background-color:
-        ${job.status === 'Applied' ? '#cfe2ff' :
-          job.status === 'Interview' ? '#fff3cd' :
-          job.status === 'Offer' ? '#d1e7dd' :
-          '#f8d7da'};
-    ">
-        ${job.status}
-    </span>
-</td>
-                    <td>${job.appliedDate || ""}</td>
+                        <span class="status" style="
+                        background:
+                        ${job.status === 'Applied' ? '#DBEAFE' :
+                        job.status === 'Interview' ? '#FEF3C7' :
+                        job.status === 'Offer' ? '#DCFCE7' :
+                        '#FEE2E2'};
+                        color:#111827;
+                        padding:6px 12px;
+                        border-radius:20px;
+                        font-weight:600;
+                        ">
+                        ${job.status}
+                        </span>
+                        </td>
+                    <td>${formatDate(job.appliedDate)}</td>
                     <td>${job.email || ""}</td>
-                    <td>${job.interviewDate || ""}</td>
-                    <td>${job.resumeVersion || ""}</td>
+                    <td>${formatDate(job.interviewDate)}</td>
+                    <td>
+                        ${
+                            job.resumeVersion
+                            ? `<a href="http://localhost:8081/${job.resumeVersion}" target="_blank">Open Resume</a>`
+                            : ""
+                        }
+                        </td>
                     <td>${job.notes || ""}</td>
                     <td>
                         ${
@@ -476,6 +674,7 @@ document.getElementById("statusChart");
 
 chart = new Chart(ctx, {
     type: "doughnut",
+
     data: {
         labels: [
             "Applied",
@@ -490,31 +689,85 @@ chart = new Chart(ctx, {
                 offer,
                 rejected
             ],
+
             backgroundColor: [
-                "#3b82f6",
-                "#f59e0b",
-                "#10b981",
-                "#ef4444"
-            ]
+                "#3B82F6", // Blue
+                "#F59E0B", // Orange
+                "#10B981", // Green
+                "#EF4444"  // Red
+            ],
+
+            borderColor: "#ffffff",
+            borderWidth: 5,
+            hoverOffset: 18,
+            cutout: "72%",
+            radius: "82%",
+            borderRadius: 8
         }]
     },
+
     options: {
         responsive: true,
+        maintainAspectRatio: false,
+
         plugins: {
+
             legend: {
-                position: "bottom"
+                position: "right",
+
+                labels: {
+                    usePointStyle: true,
+                    pointStyle: "circle",
+                    padding: 22,
+                    boxWidth: 10,
+                    font: {
+                        size: 14,
+                        weight: "600"
+                    },
+                    color: "#374151"
+                }
+            },
+
+            tooltip: {
+                backgroundColor: "#111827",
+                titleColor: "#fff",
+                bodyColor: "#fff",
+                padding: 12,
+                cornerRadius: 10,
+                displayColors: true
             }
+        },
+
+        animation: {
+            animateRotate: true,
+            duration: 1200,
+            easing: "easeOutQuart"
         }
     }
 });
         });
 }
 
-document.getElementById("jobForm").addEventListener("submit", function(e){
+document.getElementById("jobForm").addEventListener("submit", async function(e){
     e.preventDefault();
 
     const id = document.getElementById("jobId").value;
 
+    const fileInput = document.getElementById("resumeFile");
+        let resumeFileName = "";
+
+        if (fileInput.files.length > 0) {
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            const uploadResponse = await fetch("http://localhost:8081/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            resumeFileName = await uploadResponse.text();
+        }
 
     const job = {
         company: document.getElementById("company").value,
@@ -522,7 +775,7 @@ document.getElementById("jobForm").addEventListener("submit", function(e){
         status: document.getElementById("status").value,
         appliedDate: document.getElementById("appliedDate").value,
         email: document.getElementById("email").value,
-        resumeVersion: document.getElementById("resumeVersion").value,
+        resumeVersion: resumeFileName,
         notes: document.getElementById("notes").value,
         jobLink: document.getElementById("jobLink").value,
         interviewDate: document.getElementById("interviewDate").value
@@ -566,9 +819,6 @@ function editJob(id) {
             document.getElementById("email").value =
                 job.email || "";
 
-            document.getElementById("resumeVersion").value =
-                job.resumeVersion || "";
-
             document.getElementById("notes").value =
                 job.notes || "";
 
@@ -599,7 +849,6 @@ document
 // Initial load
 fetchJobs();
 </script>
-</div>
 </div>
 </body>
 </html>
