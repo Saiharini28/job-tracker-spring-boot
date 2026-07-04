@@ -101,10 +101,9 @@ Job-Application-Tracker
 
 ### Dashboard
 
-> Add your dashboard screenshot here
 
 ```
-/screenshots/dashboard.png
+"C:\Users\saiha\Pictures\Screenshots\Screenshot 2026-07-05 000702.png"
 ```
 
 ### Job Cards
