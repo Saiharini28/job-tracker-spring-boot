@@ -1,68 +1,250 @@
-# Job Tracker Spring Boot Application
+# 🚀 Job Application Tracker
 
-## Description
-A Spring Boot REST API application to track job applications. 
-This project allows users to add, view, and manage their job applications efficiently.
+A full-stack Job Application Tracker that helps users organize and monitor their job applications from one centralized dashboard.
 
-## Features
-- Add new job applications with company name, role, and status
-- View all job applications
-- Update and manage job application status
-- Clean project structure using Spring Boot, JPA, and Maven
+The application allows users to add, edit, delete, search, filter, and sort job applications while securely storing resumes and providing direct access to job posting links.
 
-## Tech Stack
-- Java 17
+---
+
+## ✨ Features
+
+- 📊 Interactive Dashboard
+  - Total Applications
+  - Applied Jobs
+  - Interviews
+  - Offers
+  - Rejections
+
+- 📈 Application Status Analytics
+  - Professional Doughnut Chart
+  - Real-time statistics
+
+- 📝 Job Management
+  - Add new application
+  - Update existing application
+  - Delete application
+
+- 🔍 Search & Filter
+  - Search by Company
+  - Filter by Status
+  - Sort by:
+    - Latest Applied Date
+    - Oldest Applied Date
+    - Company A-Z
+    - Company Z-A
+
+- 📄 Resume Management
+  - Upload Resume (PDF)
+  - Open uploaded resume directly from dashboard
+
+- 🔗 Job Links
+  - Save job posting URL
+  - Open original job post in one click
+
+- 📅 Interview Tracking
+  - Store interview dates
+  - Keep application notes
+
+- 🎨 Modern Responsive UI
+  - Clean dashboard
+  - Professional card layout
+  - Responsive design
+  - Interactive charts
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- HTML5
+- CSS3
+- JavaScript
+- Chart.js
+
+### Backend
 - Spring Boot
+- Spring MVC
+- REST API
+
+### Database
+- MySQL
+
+### Build Tool
 - Maven
-- H2 / MySQL Database
-- VS Code / IntelliJ IDEA
 
-## Setup Instructions
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Saiharini28/job-tracker-spring-boot.git
+---
 
+## 📂 Project Structure
 
-Navigate to project folder:
+```
+Job-Application-Tracker
+│
+├── backend
+│   ├── controller
+│   ├── service
+│   ├── repository
+│   ├── entity
+│   └── uploads
+│
+├── frontend
+│   └── index.html
+│
+├── database
+│   └── schema.sql
+│
+└── README.md
+```
 
-cd jobtracker
+---
 
+## 📸 Screenshots
 
-Run the application:
+### Dashboard
 
-.\mvnw spring-boot:run
+> Add your dashboard screenshot here
 
+```
+/screenshots/dashboard.png
+```
 
-Access the API:
+### Job Cards
 
-http://localhost:8081/jobs
+> Add your job cards screenshot here
 
-Sample Output
-[
-  {
-    "id": 1,
-    "company": "Google",
-    "role": "SDE",
-    "status": "Applied"
-  }
-]
+```
+/screenshots/jobs.png
+```
 
+### Analytics
 
-## 🎯 Project Purpose
+> Add your chart screenshot here
 
-The Job Tracker Spring Boot Application is designed to help users track their job applications in an organized way.  
-It allows users to store company name, job role, and application status through REST APIs.  
-This project demonstrates backend development skills using Spring Boot, RESTful services, and layered architecture.
+```
+/screenshots/chart.png
+```
 
-## 🔗 API Endpoints
+---
 
-| Method | Endpoint            | Description                     |
-|------- |---------------------|---------------------------------|
-| GET    | /jobs               | Fetch all job applications      |
-| POST   | /jobs               | Add a new job application       |
+## ⚙️ Installation
 
+### 1. Clone Repository
 
-Author
+```bash
+git clone https://github.com/yourusername/job-application-tracker.git
+```
+
+### 2. Navigate to Project
+
+```bash
+cd job-application-tracker
+```
+
+### 3. Configure MySQL
+
+Create a database.
+
+```sql
+CREATE DATABASE job_tracker;
+```
+
+Update:
+
+```
+application.properties
+```
+
+with your MySQL username and password.
+
+---
+
+### 4. Run Spring Boot
+
+```bash
+mvn spring-boot:run
+```
+
+Backend runs on
+
+```
+http://localhost:8081
+```
+
+---
+
+### 5. Open Frontend
+
+Open
+
+```
+index.html
+```
+
+in your browser.
+
+---
+
+## 📁 Resume Upload
+
+Uploaded resumes are stored inside:
+
+```
+uploads/
+```
+
+Each uploaded PDF can be opened directly from the application.
+
+---
+
+## 🔮 Future Improvements
+
+- User Authentication
+- Multiple User Accounts
+- Email Notifications
+- Resume Version History
+- Company Logo Integration
+- Dark Mode
+- Calendar View
+- Export Applications to Excel/PDF
+- Interview Reminder Notifications
+- Cloud File Storage (AWS S3)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome.
+
+1. Fork the repository
+2. Create your feature branch
+
+```bash
+git checkout -b feature-name
+```
+
+3. Commit changes
+
+```bash
+git commit -m "Added new feature"
+```
+
+4. Push
+
+```bash
+git push origin feature-name
+```
+
+5. Open a Pull Request
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👨‍💻 Author
+
 Saiharini
 
-
+If you found this project useful, consider giving it a ⭐ on GitHub.
