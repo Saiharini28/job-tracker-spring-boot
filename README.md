@@ -1,191 +1,274 @@
-🚀Job Tracker Dashboard
+# 🚀 Job Application Tracker
 
-A full-stack Job Application Tracking System built using Spring Boot, Spring Data JPA, MySQL, HTML, CSS, and JavaScript. The application helps users organize and monitor job applications through an interactive dashboard with analytics, search, filtering, sorting, and CRUD operations.
+A full-stack **Job Application Tracking System** built using **Spring Boot, Spring Data JPA, MySQL, HTML, CSS, and JavaScript**. The application helps users organize and monitor job applications through an interactive dashboard with analytics, search, filtering, sorting, resume management, and CRUD operations.
 
-Features:
-Add new job applications
-Update existing applications
-Delete job records
-Track application status
-Applied
-Interview
-Offer
-Rejected
-Search applications by company name
-Filter jobs by status
-Sort applications by
-Latest Applied Date
-Oldest Applied Date
-Company A–Z
-Company Z–A
-Interactive dashboard with application statistics
-Doughnut chart visualization using Chart.js
-Responsive job cards and table view
-Store resume version for each application
-Add personal notes
-Save job application links
-Track interview dates
-Modern dark-themed user interface
-Tech Stack
-Backend
-Java 17
-Spring Boot
-Spring Data JPA
-Hibernate
-Maven
-Frontend
-HTML5
-CSS3
-JavaScript
-Chart.js
-Database
-MySQL
-Tools
-IntelliJ IDEA
-VS Code
-Git
-GitHub
-Postman
+---
 
-Project Structure
+# ✨ Features
 
+- Add new job applications
+- Update existing applications
+- Delete job records
+- Track application status
+  - Applied
+  - Interview
+  - Offer
+  - Rejected
+- Search applications by company name
+- Filter jobs by status
+- Sort applications by:
+  - Latest Applied Date
+  - Oldest Applied Date
+  - Company A–Z
+  - Company Z–A
+- Interactive dashboard with application statistics
+- Professional Doughnut Chart using Chart.js
+- Responsive Job Cards and Table View
+- Upload and open Resume PDFs
+- Add personal notes
+- Save and open Job Application Links
+- Track Interview Dates
+- Clean and professional user interface
+
+---
+
+# 🛠️ Tech Stack
+
+## Backend
+- Java 17
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- Maven
+
+## Frontend
+- HTML5
+- CSS3
+- JavaScript
+- Chart.js
+
+## Database
+- MySQL
+
+## Tools
+- IntelliJ IDEA
+- VS Code
+- Git
+- GitHub
+- Postman
+
+---
+
+# 📁 Project Structure
+
+```text
 job-tracker-spring-boot/
 │
 ├── src/
-│   └──main/
-│      ├── java/
-│      │   └── com/jobtracker/jobtracker/
-│      │       ├── FileUploadController.java
-│      │       ├── Job.java
-|      |       |── JobController.java
-│      │       ├── JobTrackerApplication.java
-|      |       ├── repository/
-|      |       |           └── JobRepository.java
-│      │       └── service/
-|      |                ├── InterviewReminderScheduler
-|      |                ├── JobService
-|      |                ├── JobServiceImpl
-|      |                └── SendGridEmailService
-|      |        
-│      │
-│      └── resources/
-│          ├── static/
-│          │   └── index.html
-│          └── application.properties
-│   
-│   
-│── uploads
+│   └── main/
+│       ├── java/
+│       │   └── com/jobtracker/jobtracker/
+│       │       ├── FileUploadController.java
+│       │       ├── Job.java
+│       │       ├── JobController.java
+│       │       ├── JobTrackerApplication.java
+│       │       ├── repository/
+│       │       │   └── JobRepository.java
+│       │       └── service/
+│       │           ├── InterviewReminderScheduler.java
+│       │           ├── JobService.java
+│       │           ├── JobServiceImpl.java
+│       │           └── SendGridEmailService.java
+│       │
+│       └── resources/
+│           ├── static/
+│           │   └── index.html
+│           └── application.properties
+│
+├── uploads/
 ├── pom.xml
 └── README.md
+```
 
-Dashboard Preview
+---
+
+# 📊 Dashboard Preview
 
 The dashboard provides:
 
-Total Applications
-Applied Count
-Interview Count
-Offer Count
-Rejected Count
-Interactive Doughnut Chart
-Job Cards
-Job Table
-Search, Filter & Sort
-Database Fields
+- 📈 Total Applications
+- 📄 Applied Count
+- 🎯 Interview Count
+- 🎉 Offer Count
+- ❌ Rejected Count
+- 🍩 Interactive Doughnut Chart
+- 🗂️ Job Cards
+- 📋 Job Applications Table
+- 🔍 Search
+- 🎛️ Filter
+- ↕️ Sort
 
-Each job application contains:
+---
 
-Field	Description
-Company	Company name
-Role	Job role
-Status	Current application status
-Applied Date	Date of application
-Interview Date	Scheduled interview date
-Resume Version	Resume used for the application
-Notes	Personal notes
-Job Link	Original job posting URL
-REST API Endpoints
-Method	Endpoint	Description
-GET	/jobs	Get all jobs
-GET	/jobs/{id}	Get job by ID
-POST	/jobs	Add a new job
-PUT	/jobs/{id}	Update a job
-DELETE	/jobs/{id}	Delete a job
-Getting Started
-Clone the Repository
+# 🗄️ Database Fields
+
+| Field | Description |
+|-------|-------------|
+| Company | Company name |
+| Role | Job role |
+| Status | Current application status |
+| Applied Date | Date of application |
+| Interview Date | Scheduled interview date |
+| Resume Version | Uploaded Resume PDF |
+| Notes | Personal notes |
+| Job Link | Original Job Posting URL |
+
+---
+
+# 🌐 REST API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/jobs` | Get all jobs |
+| GET | `/jobs/{id}` | Get job by ID |
+| POST | `/jobs` | Add a new job |
+| PUT | `/jobs/{id}` | Update a job |
+| DELETE | `/jobs/{id}` | Delete a job |
+| POST | `/upload` | Upload Resume PDF |
+
+---
+
+# 🚀 Getting Started
+
+## 1. Clone the Repository
+
+```bash
 git clone https://github.com/Saiharini28/job-tracker-spring-boot.git
-Navigate to the Project
+```
+
+---
+
+## 2. Navigate to the Project
+
+```bash
 cd job-tracker-spring-boot
-Configure MySQL
+```
 
-Create a MySQL database and update application.properties.
+---
 
-Example:
+## 3. Configure MySQL
 
+Create a MySQL database and update **application.properties**
+
+```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/jobtracker
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
-Run the Application
+```
 
-Using Maven:
+---
 
+## 4. Run the Application
+
+Using Maven
+
+```bash
 mvn spring-boot:run
+```
 
-or run JobTrackerApplication.java directly from your IDE.
+Or run
 
-Access the Application
+```
+JobTrackerApplication.java
+```
 
-Frontend:
+from IntelliJ IDEA.
 
+---
+
+## 5. Access the Application
+
+### Frontend
+
+```
 http://localhost:8081/
+```
 
-REST API:
+### REST API
 
+```
 http://localhost:8081/jobs
+```
 
-## 📸 Screenshots
+---
 
-### Dashboard
+# 📸 Screenshots
+
+## Dashboard
+
 ![Dashboard](screenshots/dashboard.png)
 
-### Add Job Form
+---
+
+## Add Job Form
+
 ![Add Job Form](screenshots/add-job.png)
 
-### Job Cards
-![Job Cards](screenshots/job-table.png)
+---
 
-Future Enhancements
-Email interview reminders using Spring Scheduler and JavaMailSender
-User authentication with Spring Security
-Dashboard analytics with additional charts
-Export applications to Excel/PDF
-Pagination and advanced filtering
-File upload for resumes
-Responsive mobile design
-Role-based access control
-Learning Outcomes
+
+## Applications Table
+
+![Applications Table](screenshots/job-table.png)
+
+---
+
+# 🚀 Future Enhancements
+
+- User Authentication using Spring Security
+- Email Interview Reminders
+- Export Applications to Excel/PDF
+- Advanced Dashboard Analytics
+- Company Logo Support
+- Pagination
+- Dark Mode
+- Mobile Responsive Improvements
+- Resume Version History
+- Role-Based Access Control
+
+---
+
+# 📚 Learning Outcomes
 
 This project demonstrates practical experience with:
 
-RESTful API development
-CRUD operations
-Spring Boot architecture
-Spring Data JPA and Hibernate
-MySQL database integration
-JavaScript Fetch API
-Dynamic DOM manipulation
-Dashboard UI design
-Data visualization using Chart.js
-Git and GitHub version control
-Author
+- RESTful API Development
+- CRUD Operations
+- Spring Boot Architecture
+- Spring Data JPA
+- Hibernate ORM
+- MySQL Database Integration
+- JavaScript Fetch API
+- Dynamic DOM Manipulation
+- File Upload Handling
+- Dashboard UI Design
+- Chart.js Data Visualization
+- Responsive Web Design
+- Git & GitHub Version Control
 
-Sai Harini
+---
+
+# 👩‍💻 Author
+
+**SaiHarini**
 
 GitHub: https://github.com/Saiharini28
 
-License
+---
+
+# 📄 License
 
 This project is licensed under the MIT License.
